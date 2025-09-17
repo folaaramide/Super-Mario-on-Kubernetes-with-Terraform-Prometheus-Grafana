@@ -98,7 +98,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 
 helm install blackbox prometheus-community/prometheus-blackbox-exporter
 
-Exposed services:
+**Exposed services:**
 
 kubectl patch svc prometheus-grafana -n default -p '{"spec": {"type": "LoadBalancer"}}'
 
@@ -107,13 +107,13 @@ kubectl patch svc prometheus-kube-prometheus-prometheus -n default -p '{"spec": 
 
 **5️. Monitoring Configs**
 
-•	Mario ServiceMonitor:
+**-Mario ServiceMonitor:**
 
-•	kubectl apply -f service-monitor.yaml
+kubectl apply -f service-monitor.yaml
 
-•	External Probes (GitHub, LinkedIn, Kubernetes.io):
+**-External Probes (GitHub, LinkedIn, Kubernetes.io):**
 
-•	kubectl apply -f external-probes.yaml
+kubectl apply -f external-probes.yaml
 ![Screenshot](screenshots/blackbox-and-external-probes.png)
 
 **6️. Key Prometheus Queries**
@@ -147,14 +147,14 @@ probe_duration_seconds
 
 kubectl scale deployment mario-deployment --replicas=0
 
-Grafana → uptime returns "No Data", replicas = 0.
+**Grafana → uptime returns "No Data", replicas = 0.**
 ![Screenshot](screenshots/prometheus-service-down.png)
 ![Screenshot](screenshots/grafana_service_down.png)
 **-Fix Mario:**
 
 kubectl scale deployment mario-deployment --replicas=2
 
-Grafana → uptime green, replicas = 2.
+**Grafana → uptime green, replicas = 2.**
 ![Screenshot](screenshots/grafana-service-restored.png)
 
 ## Business Impact
