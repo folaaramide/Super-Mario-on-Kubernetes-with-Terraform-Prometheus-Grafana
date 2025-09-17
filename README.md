@@ -31,23 +31,17 @@ This project demonstrates how to deploy the Super Mario game on Amazon EKS using
 
 -Grafana → dashboards & visualisation
 
-## Project Structure
-Deployment-of-super-Mario-on-Kubernetes-using-terraform/
-│── EKS-TF/                  # Terraform configs for EKS & networking
-│── deployment.yaml          # Mario deployment
-│── service.yaml             # Expose Mario via LoadBalancer
-│── service-monitor.yaml     # ServiceMonitor for Mario uptime checks
-│── external-probes.yaml     # Probes for GitHub, LinkedIn, Kubernetes.io
-________________________________________
 ## Step-by-Step Implementation
-0️. Clone the Repository
+**0️. Clone the Repository**
 
 First, I cloned the project files to my EC2 instance:
 
 git clone https://github.com/folaramide/Deployment-of-super-Mario-on-Kubernetes-using-terraform.git
+
 cd Deployment-of-super-Mario-on-Kubernetes-using-terraform
 
-1️. Setup Environment
+**1️. Setup Environment**
+
 Provisioned an Ubuntu EC2 instance, install dependencies:
 
 sudo apt update -y
@@ -63,10 +57,10 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-📸 Screenshot 1: EC2 with prerequisites installed
-________________________________________
-2️. Terraform EKS Cluster
+
+**2️. Terraform EKS Cluster**
 
 •	Created an S3 bucket:
 
@@ -80,7 +74,7 @@ ________________________________________
 
 •	terraform apply -auto-approve
 ![Screenshot](screenshots/terraform_apply_success.png)
-3️. Deploy Mario Game
+**3️. Deploy Mario Game**
 
 aws eks update-kubeconfig --name EKS_CLOUD --region ap-south-1
 
@@ -99,6 +93,7 @@ Access Mario via the LoadBalancer URL.
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
 helm repo update
+
 helm install prometheus prometheus-community/kube-prometheus-stack
 
 helm install blackbox prometheus-community/prometheus-blackbox-exporter
@@ -126,15 +121,18 @@ kubectl patch svc prometheus-kube-prometheus-prometheus -n default -p '{"spec": 
 Mario uptime:
 
 probe_success{service="mario-service"}
-![Screenshot](screenshots/super-mario-uptime)
+![Screenshot](screenshots/prometheus_super_mario_uptime)
 External site uptime:
 
 probe_success{job="external-availability"}
 
+![Screenshot](screenshots/prometheus_external_websites_uptime)
 Latency:
 
 probe_duration_seconds
-![Screenshot](screenshots/super-mario-latency)
+![Screenshot](screenshots/prometheus_super_mario_latency)
+![Screenshot](screenshots/external_websites_latency)
+
 📸 Screenshot 6: Prometheus queries (Mario + externals) returning results
 7️. Grafana Dashboards
 
@@ -142,8 +140,8 @@ probe_duration_seconds
 ![Screenshot](screenshots/super-mario-grafana-uptime)
 ![Screenshot](screenshots/super-mario-grafana-latency)
 •	External Websites → GitHub/LinkedIn/Kubernetes.io uptime + latency
-![Screenshot](screenshots/external-websites-grafana-uptime)
-![Screenshot](screenshots/external-websites-grafana-latency)
+![Screenshot](screenshots/external_websites_grafana_uptime)
+![Screenshot](screenshots/external_websites_grafana_latency)
 📸 Screenshot 7: Grafana dashboard healthy (Mario + external probes green)
 
 8️. Break & Fix Demo
@@ -159,7 +157,7 @@ Grafana → uptime turns red, replicas = 0.
 
 Grafana → uptime green, replicas = 2.
 ![Screenshot](screenshots/prometheus-service-down)
-![Screenshot](screenshots/mario-downtime)
+![Screenshot](screenshots/grafana-service-down)
 
 📸 Screenshot 8: Grafana dashboard showing Mario down (red)
 📸 Screenshot 9: Grafana dashboard after fix (green again)
