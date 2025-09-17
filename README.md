@@ -143,19 +143,19 @@ probe_duration_seconds
 ![Screenshot](screenshots/external_websites_grafana_latency.png)
 
 **8️. Break & Fix Demo**
--Break Mario:
+**-Break Mario:**
 
 kubectl scale deployment mario-deployment --replicas=0
 
 Grafana → uptime returns "No Data", replicas = 0.
-
--Fix Mario:
+![Screenshot](screenshots/prometheus-service-down.png)
+![Screenshot](screenshots/grafana_service_down.png)
+**-Fix Mario:**
 
 kubectl scale deployment mario-deployment --replicas=2
 
 Grafana → uptime green, replicas = 2.
-![Screenshot](screenshots/prometheus-service-down.png)
-![Screenshot](screenshots/grafana-service-down.png)
+![Screenshot](screenshots/grafana-service-restored.png)
 
 ## Business Impact
 1. Gaming → ensures uptime for smooth player experience.
