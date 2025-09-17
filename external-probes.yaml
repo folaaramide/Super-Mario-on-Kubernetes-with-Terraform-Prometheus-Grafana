@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: external-websites
+  labels:
+    release: prometheus
+spec:
+  jobName: external-availability
+  interval: 30s
+  module: http_2xx
+  prober:
+    url: blackbox-prometheus-blackbox-exporter:9115
+  targets:
+    staticConfig:
+      static:
+        - https://github.com
+        - https://linkedin.com
+        - https://kubernetes.io
