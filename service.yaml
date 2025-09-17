@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mario-service
+  labels:
+    app: mario
+spec:
+  type: LoadBalancer
+  selector:
+    app: mario
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 80
