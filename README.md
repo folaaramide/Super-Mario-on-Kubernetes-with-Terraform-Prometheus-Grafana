@@ -131,7 +131,7 @@ probe_success{job="external-availability"}
 
 probe_duration_seconds
 ![Screenshot](screenshots/prometheus_super_mario_latency.png)
-![Screenshot](screenshots/external_probes.png)
+![Screenshot](screenshots/external_websites_latency.png)
 
 **7️. Grafana Dashboards**
 
